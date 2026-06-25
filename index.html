@@ -270,7 +270,7 @@ body {
 
   <div class="screen" id="quizScreen">
     <div class="title">🔒 解鎖挑戰</div>
-    <div class="subtitle">簡易題</div>
+    <div class="subtitle" id="subtitle">簡易題</div>
 
     <div class="card">
       <div class="badge" id="badge">第 1 題 / 共 5 題</div>
@@ -349,7 +349,9 @@ function showQuestion() {
   updateProgress();
 
   const q = questions[current];
-  document.getElementById("step").textContent = `Question ${current + 1}`;
+
+  document.getElementById("subtitle").textContent = q.category;
+  document.getElementById("badge").textContent = `第 ${current + 1} 題`;
   document.getElementById("question").textContent = q.question;
   document.getElementById("result").textContent = "";
 
