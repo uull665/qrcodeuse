@@ -1,119 +1,206 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Private Message</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Only You</title>
+<style>
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: #050505;
+    color: white;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 24px;
+  }
 
-  <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: #050505;
-      color: #fff;
-      font-family: "Arial", sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 24px;
-    }
+  .box {
+    width: 100%;
+    max-width: 430px;
+    animation: fadeIn 0.6s ease;
+  }
 
-    .box {
-      width: 100%;
-      max-width: 420px;
-    }
+  h1 {
+    font-size: 24px;
+    margin-bottom: 18px;
+  }
 
-    h1 {
-      font-size: 28px;
-      margin-bottom: 12px;
-      letter-spacing: 2px;
-    }
+  .intro {
+    color: #ccc;
+    line-height: 1.8;
+    margin-bottom: 28px;
+  }
 
-    p {
-      color: #aaa;
-      line-height: 1.8;
-    }
+  .progress {
+    font-size: 28px;
+    letter-spacing: 6px;
+    margin-bottom: 28px;
+  }
 
-    input {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 14px;
-      margin-top: 20px;
-      border-radius: 10px;
-      border: 1px solid #555;
-      background: #111;
-      color: #fff;
-      font-size: 18px;
-      text-align: center;
-    }
+  .question {
+    font-size: 22px;
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
 
-    button {
-      width: 100%;
-      padding: 14px;
-      margin-top: 16px;
-      border: none;
-      border-radius: 10px;
-      background: #fff;
-      color: #000;
-      font-size: 18px;
-      cursor: pointer;
-    }
+  button {
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0;
+    border-radius: 12px;
+    border: 1px solid #666;
+    background: #111;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+  }
 
-    .error {
-      color: #ff6b6b;
-      margin-top: 14px;
-      display: none;
-    }
+  button:hover {
+    background: #222;
+  }
 
-    .message {
-      display: none;
-      font-size: 24px;
-      line-height: 2;
-      animation: fadeIn 1.2s ease;
-    }
+  .message {
+    margin-top: 20px;
+    font-size: 18px;
+    min-height: 28px;
+  }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(12px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-  </style>
+  .correct {
+    color: #ffb6c1;
+  }
+
+  .wrong {
+    color: #ff6b6b;
+  }
+
+  .final {
+    display: none;
+    font-size: 24px;
+    line-height: 2;
+    animation: fadeIn 1.2s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
 </head>
 
 <body>
-  <div class="box" id="loginBox">
-    <h1>ENTER PASSWORD</h1>
-    <p>輸入密碼後，才能看到這段訊息。</p>
 
-    <input type="password" id="password" placeholder="Password" />
-    <button onclick="checkPassword()">Unlock</button>
+<div class="box" id="quizBox">
+  <div class="progress" id="progress">♡♡♡♡♡</div>
 
-    <div class="error" id="errorText">密碼錯誤</div>
+  <h1>請先答對，才能進到真正的頁面</h1>
+
+  <div class="intro" id="intro">
+    總共有五題。<br>
+    答對一題，才能前往下一題。
   </div>
 
-  <div class="message" id="messageBox">
-    驚不驚喜<br>
-    意不意外<br><br>
-  </div>
+  <div class="question" id="question"></div>
+  <div id="answers"></div>
+  <div class="message" id="message"></div>
+</div>
 
-  <script>
-    function checkPassword() {
-      const password = document.getElementById("password").value;
-      const correctPassword = "0712813329";
+<div class="final" id="finalPage">
+  恭喜你答對了。<br><br>
+  這裡之後可以放真正要給他看的內容。<br>
+  例如照片、告白、留言、影片連結或秘密頁面。
+</div>
 
-      if (password === correctPassword) {
-        document.getElementById("loginBox").style.display = "none";
-        document.getElementById("messageBox").style.display = "block";
+<script>
+const questions = [
+  {
+    title: "簡易題：第一次見面在婚禮上，老婆吃了幾顆刈包？",
+    options: [
+      { text: "A：老婆沒吃", correct: false },
+      { text: "B：整顆吃完", correct: false },
+      { text: "C：吃了半顆", correct: true }
+    ],
+    wrongText: "不可能ㄅ知道吧!"
+  },
+  {
+    title: "金錢觀念：你的錢是誰的錢？",
+    options: [
+      { text: "A：老婆的錢", correct: true },
+      { text: "B：我的就是我的你怎麼樣", correct: false },
+      { text: "C：你最好選A", correct: false }
+    ],
+    wrongText: "不要了，真的不要了"
+  }
+];
+
+let current = 0;
+const totalQuestions = 5;
+
+function updateProgress() {
+  let hearts = "";
+  for (let i = 0; i < totalQuestions; i++) {
+    hearts += i < current ? "❤" : "♡";
+  }
+  document.getElementById("progress").textContent = hearts;
+}
+
+function showQuestion() {
+  updateProgress();
+
+  document.getElementById("intro").style.display = current === 0 ? "block" : "none";
+  document.getElementById("message").textContent = "";
+  document.getElementById("message").className = "message";
+
+  const q = questions[current];
+  document.getElementById("question").textContent = q.title;
+
+  const answers = document.getElementById("answers");
+  answers.innerHTML = "";
+
+  q.options.forEach(option => {
+    const btn = document.createElement("button");
+    btn.textContent = option.text;
+    btn.onclick = () => checkAnswer(option.correct, q.wrongText);
+    answers.appendChild(btn);
+  });
+}
+
+function checkAnswer(isCorrect, wrongText) {
+  const message = document.getElementById("message");
+
+  if (isCorrect) {
+    message.textContent = "正確! 再下一頁";
+    message.className = "message correct";
+
+    setTimeout(() => {
+      current++;
+
+      if (current >= questions.length) {
+        showComingSoon();
       } else {
-        document.getElementById("errorText").style.display = "block";
+        showQuestion();
       }
-    }
-  </script>
+    }, 900);
+
+  } else {
+    message.textContent = wrongText;
+    message.className = "message wrong";
+  }
+}
+
+function showComingSoon() {
+  updateProgress();
+  document.getElementById("question").innerHTML =
+    "目前已完成 2 題。<br>剩下 3 題補上後，才會開啟真正頁面。";
+  document.getElementById("answers").innerHTML = "";
+  document.getElementById("message").textContent = "";
+}
+
+showQuestion();
+</script>
+
 </body>
 </html>
