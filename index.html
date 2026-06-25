@@ -302,16 +302,18 @@ const questions = [
     icons: ["😭", "🥲"]
   },
   {
-    category: "愛情ㄉ考驗",
-    question: "如果我跟另一個女生同時發訊息給你\n你會先回誰？",
-    options: [
-      { label: "A", text: "當然是老婆嚕", correct: false },
-      { label: "B", text: "回完她再回老婆", correct: false },
-      { label: "C", text: "回完老婆再回她", correct: false }
-    ],
-    wrongTexts: ["那她是誰", "那她是誰!不要了\n真的不要了"],
-    icons: ["😭", "🥲"],
-    passAnyway: true
+  category: "愛情ㄉ考驗",
+  question: "如果我跟另一個女生同時發訊息給你\n你會先回誰？",
+  options: [
+    { label: "A", text: "當然是老婆嚕", correct: false },
+    { label: "B", text: "回完她再回老婆", correct: false },
+    { label: "C", text: "回完老婆再回她", correct: false }
+  ],
+  wrongTexts: ["那她是誰", "那她是誰!不要了\n真的不要了"],
+  icons: ["😭", "🥲"],
+  passAnyway: true,
+  passModalText: "算了算了",
+  passModalIcon: "😤"
   }
 ];
 
@@ -350,26 +352,36 @@ function showQuestion() {
 function checkAnswer(isCorrect) {
   const q = questions[current];
 
-  if (isCorrect || q.passAnyway) {
-    if (q.passAnyway && !isCorrect) {
-      document.getElementById("result").textContent = "❌ 錯了，但算你過";
-    } else {
-      document.getElementById("result").textContent = "✅ 正確! 再下一頁";
-    }
-
+  if (isCorrect) {
     current++;
     updateProgress();
+    document.getElementById("result").textContent = "✅ 正確! 再下一頁";
 
     setTimeout(() => {
-      if (current >= questions.length) {
-        document.getElementById("badge").textContent = "目前先到這裡";
-        document.getElementById("question").textContent = `已完成 ${questions.length} 題。\n剩下題目補上後，才會進到真正頁面。`;
-        document.getElementById("answers").innerHTML = "";
-        document.getElementById("result").textContent = "";
-      } else {
-        showQuestion();
-      }
+      goNextQuestion();
     }, 850);
+
+  } else if (q.passAnyway) {
+    const count = wrongCounts[current];
+    const index = Math.min(count, q.wrongTexts.length - 1);
+
+    document.getElementById("modalIcon").textContent = q.icons[index];
+    document.getElementById("modalText").textContent = q.wrongTexts[index];
+    document.getElementById("modalOverlay").style.display = "flex";
+
+    wrongCounts[current]++;
+
+    window.afterModalAction = function () {
+      document.getElementById("modalIcon").textContent = q.passModalIcon;
+      document.getElementById("modalText").textContent = q.passModalText;
+      document.getElementById("modalOverlay").style.display = "flex";
+
+      window.afterModalAction = function () {
+        current++;
+        updateProgress();
+        goNextQuestion();
+      };
+    };
 
   } else {
     const count = wrongCounts[current];
@@ -385,6 +397,12 @@ function checkAnswer(isCorrect) {
 
 function closeModal() {
   document.getElementById("modalOverlay").style.display = "none";
+
+  if (typeof window.afterModalAction === "function") {
+    const action = window.afterModalAction;
+    window.afterModalAction = null;
+    action();
+  }
 }
 
 function unlockFinal() {
@@ -399,6 +417,16 @@ function unlockFinal() {
     document.getElementById("unlockScreen").style.display = "none";
     document.getElementById("finalPage").style.display = "block";
   }, 1800);
+}
+function goNextQuestion() {
+  if (current >= questions.length) {
+    document.getElementById("badge").textContent = "目前先到這裡";
+    document.getElementById("question").textContent = `已完成 ${questions.length} 題。\n剩下題目補上後，才會進到真正頁面。`;
+    document.getElementById("answers").innerHTML = "";
+    document.getElementById("result").textContent = "";
+  } else {
+    showQuestion();
+  }
 }
 
 showQuestion();
