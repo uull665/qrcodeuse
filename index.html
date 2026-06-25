@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Only You</title>
+<title>榮哥驚喜包</title>
 
 <style>
 * { box-sizing: border-box; }
@@ -281,14 +281,14 @@ body {
 const questions = [
   {
     category: "簡易題",
-    question: "第一次見面在婚禮上\n老婆吃了幾顆刈包？",
+    question: "第一次見面是在婚禮上吧!\n那我吃了幾顆刈包？",
     options: [
       { label: "A", text: "老婆沒吃", correct: false },
       { label: "B", text: "整顆吃完", correct: false },
       { label: "C", text: "吃了半顆", correct: true }
     ],
-    wrongTexts: ["不可能不知道ㄅ!", "還要繼續嗎搞什麼！"],
-    icons: ["😒", "😑"]
+    wrongTexts: ["不可能不知道ㄅ!", "還要繼續嗎搞什麼！", "完了完了生日禮物沒了"],
+    icons: ["😒", "😑", "😒"]
   },
   {
     category: "金錢觀念",
@@ -300,6 +300,18 @@ const questions = [
     ],
     wrongTexts: ["不要了", "不要了\n真的不要了"],
     icons: ["😭", "🥲"]
+  }
+  {
+    category: "愛情ㄉ考驗",
+    question: "如果我跟另一個女生同時發訊息給你\n你會先回誰？",
+    options: [
+      { label: "A", text: "當然是老婆嚕", correct: false },
+      { label: "B", text: "回完她再回老婆", correct: false },
+      { label: "C", text: "回完老婆再回她", correct: false }
+    ],
+    wrongTexts: ["那她是誰", "那她是誰!不要了\n真的不要了"],
+    icons: ["😭", "🥲"]
+    passAnyway: true
   }
 ];
 
