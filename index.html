@@ -1,161 +1,255 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Only You</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: Arial, "Noto Sans TC", sans-serif;
-  color: #0b2b55;
-  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", Arial, sans-serif;
+  color: #123;
   background:
-    linear-gradient(to bottom, rgba(135,206,250,.85), rgba(255,255,255,.85) 45%, rgba(58,169,226,.9)),
+    linear-gradient(to bottom, rgba(210,235,255,.88), rgba(255,255,255,.9) 45%, rgba(94,176,230,.88)),
     url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80");
   background-size: cover;
   background-position: center;
-  padding: 28px 18px;
+  padding: 22px 16px;
 }
 
 .app {
   max-width: 430px;
-  margin: 0 auto;
   min-height: 100vh;
+  margin: 0 auto;
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
 }
 
-h1 {
-  font-size: 30px;
+.screen {
+  width: 100%;
+  animation: fadeIn .5s ease;
+}
+
+.title {
+  font-size: 24px;
   line-height: 1.45;
-  margin: 0 0 14px;
   font-weight: 800;
+  text-align: center;
+  color: #0d3768;
+  margin-bottom: 14px;
 }
 
-.sub {
-  font-size: 17px;
+.subtitle {
+  font-size: 16px;
   line-height: 1.8;
-  margin-bottom: 30px;
-  color: #173b66;
-}
-
-.wave {
-  font-size: 28px;
-  margin-bottom: 24px;
+  text-align: center;
+  color: #315b85;
+  margin-bottom: 22px;
 }
 
 .card {
-  background: rgba(255,255,255,.92);
-  border-radius: 26px;
-  padding: 30px 22px 26px;
-  box-shadow: 0 18px 45px rgba(0,0,0,.12);
+  background: rgba(255,255,255,.94);
+  border-radius: 28px;
+  padding: 28px 22px 24px;
+  box-shadow: 0 18px 45px rgba(27,91,145,.18);
+  backdrop-filter: blur(10px);
 }
 
 .badge {
   display: inline-block;
-  background: linear-gradient(135deg, #2f76c9, #5aa7e8);
-  color: #fff;
-  padding: 10px 24px;
-  border-radius: 999px;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 700;
-  margin-top: -54px;
-  margin-bottom: 24px;
-  box-shadow: 0 8px 18px rgba(47,118,201,.28);
+  color: #fff;
+  background: linear-gradient(135deg, #2276cf, #68b9f4);
+  padding: 8px 18px;
+  border-radius: 999px;
+  margin-bottom: 22px;
 }
 
 .category {
-  font-size: 25px;
-  font-weight: 800;
-  margin-bottom: 14px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #4a6f96;
+  margin-bottom: 10px;
 }
 
 .question {
-  font-size: 25px;
-  font-weight: 800;
-  line-height: 1.6;
-  margin-bottom: 26px;
+  font-size: 27px;
+  line-height: 1.55;
+  font-weight: 850;
+  color: #0d2d52;
   white-space: pre-line;
+  margin-bottom: 24px;
 }
 
 .answer {
   width: 100%;
-  border: 1.5px solid #a9c9ea;
-  background: rgba(255,255,255,.95);
-  border-radius: 16px;
-  padding: 15px 16px;
-  margin: 13px 0;
+  border: 1.5px solid #b7d2ec;
+  background: rgba(255,255,255,.96);
+  border-radius: 18px;
+  padding: 14px 15px;
+  margin: 12px 0;
   display: flex;
   align-items: center;
-  gap: 18px;
-  color: #102b4c;
-  font-size: 21px;
+  gap: 14px;
+  color: #143a61;
+  font-size: 20px;
+  font-weight: 650;
   cursor: pointer;
+  transition: .16s ease;
+}
+
+.answer:active {
+  transform: scale(.98);
+  background: #eaf5ff;
 }
 
 .answer span {
-  width: 44px;
-  height: 44px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #2f76c9, #5aa7e8);
+  background: linear-gradient(135deg, #2276cf, #68b9f4);
   color: white;
   display: inline-flex;
-  justify-content: center;
   align-items: center;
-  font-weight: 800;
+  justify-content: center;
+  font-weight: 850;
   flex-shrink: 0;
 }
 
-.message {
-  min-height: 28px;
-  margin-top: 18px;
-  font-size: 18px;
-  font-weight: 700;
+.result {
+  min-height: 30px;
+  margin-top: 16px;
+  font-size: 19px;
+  font-weight: 800;
+  color: #1675c1;
+  text-align: center;
 }
 
-.correct {
-  color: #1877c9;
-}
-
-.wrong {
-  color: #d93025;
+.footer {
+  margin-top: 22px;
+  text-align: center;
 }
 
 .hearts {
-  margin: 26px 0 10px;
-  font-size: 22px;
-  letter-spacing: 8px;
+  font-size: 20px;
+  letter-spacing: 4px;
+  margin-bottom: 8px;
 }
 
-.note {
-  font-size: 16px;
-  color: #17416e;
-  margin-top: 12px;
+.step {
+  font-size: 14px;
+  color: #315b85;
+  font-weight: 700;
 }
 
 .final {
   display: none;
-  background: rgba(255,255,255,.92);
-  border-radius: 26px;
-  padding: 36px 24px;
-  box-shadow: 0 18px 45px rgba(0,0,0,.12);
+  width: 100%;
+  background: rgba(255,255,255,.94);
+  border-radius: 28px;
+  padding: 38px 24px;
+  box-shadow: 0 18px 45px rgba(27,91,145,.18);
+  text-align: center;
   font-size: 24px;
   line-height: 2;
-  font-weight: 700;
+  font-weight: 800;
+  color: #0d2d52;
 }
 
-@media (max-width: 380px) {
-  h1 { font-size: 26px; }
-  .question { font-size: 22px; }
-  .answer { font-size: 19px; }
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.28);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 99;
+}
+
+.modal {
+  width: 100%;
+  max-width: 320px;
+  background: rgba(255,255,255,.96);
+  border-radius: 24px;
+  padding: 28px 22px 20px;
+  text-align: center;
+  box-shadow: 0 18px 45px rgba(0,0,0,.22);
+  animation: pop .22s ease;
+}
+
+.modalIcon {
+  font-size: 34px;
+  margin-bottom: 12px;
+}
+
+.modalText {
+  font-size: 21px;
+  line-height: 1.55;
+  font-weight: 800;
+  color: #143a61;
+  white-space: pre-line;
+  margin-bottom: 22px;
+}
+
+.modal button {
+  width: 100%;
+  border: none;
+  border-radius: 15px;
+  padding: 13px;
+  background: #2276cf;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.unlock {
+  display: none;
+  text-align: center;
+  color: #0d3768;
+  font-weight: 850;
+}
+
+.unlockHearts {
+  font-size: 24px;
+  margin-bottom: 18px;
+}
+
+.unlockText {
+  font-size: 24px;
+  margin-bottom: 18px;
+}
+
+.bar {
+  width: 100%;
+  height: 12px;
+  background: rgba(255,255,255,.55);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.barInner {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #2276cf, #68b9f4);
+  border-radius: 999px;
+  transition: width 1.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pop {
+  from { opacity: 0; transform: scale(.92); }
+  to { opacity: 1; transform: scale(1); }
 }
 </style>
 </head>
@@ -163,33 +257,43 @@ h1 {
 <body>
 
 <div class="app">
-  <div id="quizBox">
-    <h1>請先答對，<br>才能進到真正的頁面</h1>
 
-    <div class="sub">
-      總共有五題。<br>
-      答對一題，才能前往下一題。
-    </div>
-
-    <div class="wave">〰️</div>
+  <div class="screen" id="quizScreen">
+    <div class="title">請先答對，<br>才能進到真正的頁面</div>
+    <div class="subtitle">總共有五題。<br>答對一題，才能前往下一題。</div>
 
     <div class="card">
       <div class="badge" id="badge">第 1 題 / 共 5 題</div>
-
       <div class="category" id="category"></div>
       <div class="question" id="question"></div>
-
       <div id="answers"></div>
-      <div class="message" id="message"></div>
+      <div class="result" id="result"></div>
     </div>
 
-    <div class="hearts" id="hearts">♡ ♡ ♡ ♡ ♡</div>
-    <div class="note">🔒 只有答對，才會解鎖下一題喔！</div>
+    <div class="footer">
+      <div class="hearts" id="hearts">🤍 🤍 🤍 🤍 🤍</div>
+      <div class="step" id="step">Question 1 / 5</div>
+    </div>
+  </div>
+
+  <div class="unlock" id="unlockScreen">
+    <div class="unlockHearts">❤️ ❤️ ❤️ ❤️ ❤️</div>
+    <div class="unlockText">正在驗證身份...</div>
+    <div class="bar"><div class="barInner" id="barInner"></div></div>
   </div>
 
   <div class="final" id="finalPage">
-    恭喜你答對了。<br><br>
+    Access Granted<br><br>
     這裡之後放真正的頁面內容。
+  </div>
+
+</div>
+
+<div class="modalOverlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modalIcon" id="modalIcon">😶</div>
+    <div class="modalText" id="modalText"></div>
+    <button onclick="closeModal()">再試一次</button>
   </div>
 </div>
 
@@ -203,7 +307,8 @@ const questions = [
       { label: "B", text: "整顆吃完", correct: false },
       { label: "C", text: "吃了半顆", correct: true }
     ],
-    wrongText: "不可能ㄅ知道吧!"
+    wrongTexts: ["不可能不知道ㄅ!", "還要繼續嗎搞什麼！"],
+    icons: ["😒", "😑"]
   },
   {
     category: "金錢觀念",
@@ -213,31 +318,32 @@ const questions = [
       { label: "B", text: "我的就是我的你怎麼樣", correct: false },
       { label: "C", text: "你最好選A", correct: false }
     ],
-    wrongText: "不要了，真的不要了"
+    wrongTexts: ["不要了", "不要了\n真的不要了"],
+    icons: ["😭", "🥲"]
   }
 ];
 
 let current = 0;
 const totalQuestions = 5;
+let wrongCounts = Array(questions.length).fill(0);
 
-function updateHearts() {
-  let result = "";
+function updateProgress() {
+  let hearts = "";
   for (let i = 0; i < totalQuestions; i++) {
-    result += i < current ? "❤️ " : "♡ ";
+    hearts += i < current ? "❤️ " : "🤍 ";
   }
-  document.getElementById("hearts").textContent = result.trim();
+  document.getElementById("hearts").textContent = hearts.trim();
+  document.getElementById("step").textContent = `Question ${Math.min(current + 1, totalQuestions)} / ${totalQuestions}`;
 }
 
 function showQuestion() {
-  updateHearts();
+  updateProgress();
 
   const q = questions[current];
-
   document.getElementById("badge").textContent = `第 ${current + 1} 題 / 共 ${totalQuestions} 題`;
   document.getElementById("category").textContent = q.category;
   document.getElementById("question").textContent = q.question;
-  document.getElementById("message").textContent = "";
-  document.getElementById("message").className = "message";
+  document.getElementById("result").textContent = "";
 
   const answers = document.getElementById("answers");
   answers.innerHTML = "";
@@ -246,36 +352,57 @@ function showQuestion() {
     const btn = document.createElement("button");
     btn.className = "answer";
     btn.innerHTML = `<span>${option.label}</span>${option.text}`;
-    btn.onclick = () => checkAnswer(option.correct, q.wrongText);
+    btn.onclick = () => checkAnswer(option.correct);
     answers.appendChild(btn);
   });
 }
 
-function checkAnswer(isCorrect, wrongText) {
-  const message = document.getElementById("message");
-
+function checkAnswer(isCorrect) {
   if (isCorrect) {
     current++;
-    updateHearts();
-
-    message.textContent = "正確! 再下一頁";
-    message.className = "message correct";
+    updateProgress();
+    document.getElementById("result").textContent = "✅ 正確! 再下一頁";
 
     setTimeout(() => {
       if (current >= questions.length) {
         document.getElementById("category").textContent = "目前先到這裡";
         document.getElementById("question").textContent = "已完成 2 題。\n剩下 3 題補上後，才會進到真正頁面。";
         document.getElementById("answers").innerHTML = "";
-        document.getElementById("message").textContent = "";
+        document.getElementById("result").textContent = "";
       } else {
         showQuestion();
       }
-    }, 900);
+    }, 850);
 
   } else {
-    message.textContent = wrongText;
-    message.className = "message wrong";
+    const q = questions[current];
+    const count = wrongCounts[current];
+    const index = Math.min(count, q.wrongTexts.length - 1);
+
+    document.getElementById("modalIcon").textContent = q.icons[index];
+    document.getElementById("modalText").textContent = q.wrongTexts[index];
+    document.getElementById("modalOverlay").style.display = "flex";
+
+    wrongCounts[current]++;
   }
+}
+
+function closeModal() {
+  document.getElementById("modalOverlay").style.display = "none";
+}
+
+function unlockFinal() {
+  document.getElementById("quizScreen").style.display = "none";
+  document.getElementById("unlockScreen").style.display = "block";
+
+  setTimeout(() => {
+    document.getElementById("barInner").style.width = "100%";
+  }, 100);
+
+  setTimeout(() => {
+    document.getElementById("unlockScreen").style.display = "none";
+    document.getElementById("finalPage").style.display = "block";
+  }, 1800);
 }
 
 showQuestion();
