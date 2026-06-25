@@ -1,26 +1,3 @@
-<div class="screen" id="startScreen">
-
-    <div class="card" style="text-align:center;padding:55px 28px;">
-
-        <div style="font-size:70px;">🎁</div>
-
-        <p style="line-height:2;color:#5b7191;font-size:18px;margin-top:20px;">
-            回答幾個問題<br>
-            即可解鎖你的生日驚喜 🎂
-        </p>
-
-        <button class="answer"
-            style="justify-content:center;margin-top:35px;"
-            onclick="startQuiz()">
-
-            💝 開始解鎖
-
-        </button>
-
-    </div>
-
-</div>
-
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -73,6 +50,30 @@ body {
   padding: 30px 22px 26px;
   box-shadow: 0 18px 45px rgba(27,91,145,.18);
   backdrop-filter: blur(10px);
+}
+
+.startCard {
+  text-align: center;
+  padding: 55px 28px;
+}
+
+.startGift {
+  font-size: 70px;
+  margin-bottom: 20px;
+  animation: giftFloat 1.8s ease-in-out infinite;
+}
+
+.startText {
+  line-height: 2;
+  color: #5b7191;
+  font-size: 18px;
+  margin: 20px 0 0;
+  font-weight: 700;
+}
+
+.startButton {
+  justify-content: center;
+  margin-top: 35px;
 }
 
 .badge {
@@ -214,6 +215,7 @@ body {
   color: #fff;
   font-size: 17px;
   font-weight: 800;
+  cursor: pointer;
 }
 
 .unlock {
@@ -251,14 +253,32 @@ body {
   transition: width 1.2s ease;
 }
 
+.fadeOut {
+  animation: fadeOut .6s forwards;
+}
+
+.fadeIn {
+  animation: fadeIn .6s ease;
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes fadeOut {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(.92); }
+}
+
 @keyframes pop {
   from { opacity: 0; transform: scale(.92); }
   to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes giftFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
 </style>
 </head>
@@ -267,7 +287,22 @@ body {
 
 <div class="app">
 
-  <div class="screen" id="quizScreen">
+  <div class="screen" id="startScreen">
+    <div class="card startCard">
+      <div class="startGift">🎁</div>
+
+      <p class="startText">
+        回答幾個問題<br>
+        即可解鎖你的生日驚喜 🎂
+      </p>
+
+      <button class="answer startButton" onclick="startQuiz()">
+        💝 開始解鎖
+      </button>
+    </div>
+  </div>
+
+  <div class="screen" id="quizScreen" style="display:none;">
     <div class="title">🔒 解鎖挑戰</div>
 
     <div class="card">
@@ -344,6 +379,18 @@ let current = 0;
 const totalQuestions = 5;
 let wrongCounts = Array(questions.length).fill(0);
 window.afterModalAction = null;
+
+function startQuiz() {
+  const start = document.getElementById("startScreen");
+  start.classList.add("fadeOut");
+
+  setTimeout(() => {
+    start.style.display = "none";
+    const quiz = document.getElementById("quizScreen");
+    quiz.style.display = "block";
+    quiz.classList.add("fadeIn");
+  }, 600);
+}
 
 function updateProgress() {
   let hearts = "";
