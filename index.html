@@ -4,9 +4,9 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Only You</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Chocolate+Classical+Sans&family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700&family=Kaisei+Decol:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
 * { box-sizing: border-box; }
@@ -48,12 +48,13 @@ body {
 }  
 
 .subtitle {
-  font-size: 18px;
-  line-height: 1.7;
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 2px;
   text-align: center;
   color: #4a6f96;
-  margin-bottom: 26px;
-  font-weight: 600;
+  margin-bottom: 22px;
 }
 
 .card {
@@ -83,9 +84,11 @@ body {
 }
 
 .question {
-  font-size: 30px;
+  font-family: "Kaisei Decol", serif;
+  font-size: 31px;
   line-height: 1.7;
   font-weight: 700;
+  letter-spacing: 1px;
   color: #0d2d52;
   white-space: pre-line;
   margin-bottom: 28px;
@@ -146,10 +149,13 @@ body {
   text-align: center;
 }
 
-.hearts {
-  font-size: 20px;
-  letter-spacing: 4px;
-  margin-bottom: 8px;
+.hearts{
+    text-align:center;
+    font-size:28px;
+    letter-spacing:8px;
+    color:#ff7aa2;
+    margin:8px 0 22px;
+    user-select:none;
 }
 
 .step {
@@ -272,22 +278,23 @@ body {
     <div class="title">🔒 解鎖挑戰</div>
     <div class="subtitle" id="subtitle">簡易題</div>
 
-    <div class="card">
-      <div class="badge" id="badge">第 1 題 / 共 5 題</div>
-      <div class="category" id="category"></div>
-      <div class="question" id="question"></div>
-      <div id="answers"></div>
-      <div class="result" id="result"></div>
-    </div>
+<div class="card">
+    <div class="badge" id="badge">第 1 題</div>
+
+    <div class="hearts" id="hearts">♡ ♡ ♡ ♡ ♡</div>
+
+    <div class="question" id="question"></div>
+    <div id="answers"></div>
+    <div class="result" id="result"></div>
+</div>
 
     <div class="footer">
-      <div class="hearts" id="hearts">🤍 🤍 🤍 🤍 🤍</div>
       <div class="step" id="step">Question 1 / 5</div>
     </div>
   </div>
 
   <div class="unlock" id="unlockScreen">
-    <div class="unlockHearts">❤️ ❤️ ❤️ ❤️ ❤️</div>
+    <div class="unlockHearts">♥ ♥ ♥ ♥ ♥</div>
     <div class="unlockText">正在驗證身份...</div>
     <div class="bar"><div class="barInner" id="barInner"></div></div>
   </div>
@@ -339,7 +346,7 @@ let wrongCounts = Array(questions.length).fill(0);
 function updateProgress() {
   let hearts = "";
   for (let i = 0; i < totalQuestions; i++) {
-    hearts += i < current ? "❤️ " : "🤍 ";
+    hearts += i < current ? "♥ " : "♡ ";
   }
   document.getElementById("hearts").textContent = hearts.trim();
   document.getElementById("step").textContent = `Question ${Math.min(current + 1, totalQuestions)} / ${totalQuestions}`;
