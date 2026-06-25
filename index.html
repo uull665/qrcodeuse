@@ -339,7 +339,7 @@ function showQuestion() {
   updateProgress();
 
   const q = questions[current];
-  document.getElementById("badge").textContent = `第 ${current + 1} 題 / 共 ${totalQuestions} 題;
+ document.getElementById("step").textContent = `第 ${current + 1} 題`;
   document.getElementById("question").textContent = q.question;
   document.getElementById("result").textContent = "";
 
