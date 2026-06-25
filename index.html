@@ -300,7 +300,7 @@ const questions = [
     ],
     wrongTexts: ["不要了", "不要了\n真的不要了"],
     icons: ["😭", "🥲"]
-  }
+  },
   {
     category: "愛情ㄉ考驗",
     question: "如果我跟另一個女生同時發訊息給你\n你會先回誰？",
@@ -310,7 +310,7 @@ const questions = [
       { label: "C", text: "回完老婆再回她", correct: false }
     ],
     wrongTexts: ["那她是誰", "那她是誰!不要了\n真的不要了"],
-    icons: ["😭", "🥲"]
+    icons: ["😭", "🥲"],
     passAnyway: true
   }
 ];
@@ -348,15 +348,22 @@ function showQuestion() {
 }
 
 function checkAnswer(isCorrect) {
-  if (isCorrect) {
+  const q = questions[current];
+
+  if (isCorrect || q.passAnyway) {
+    if (q.passAnyway && !isCorrect) {
+      document.getElementById("result").textContent = "❌ 錯了，但算你過";
+    } else {
+      document.getElementById("result").textContent = "✅ 正確! 再下一頁";
+    }
+
     current++;
     updateProgress();
-    document.getElementById("result").textContent = "✅ 正確! 再下一頁";
 
     setTimeout(() => {
       if (current >= questions.length) {
         document.getElementById("badge").textContent = "目前先到這裡";
-        document.getElementById("question").textContent = "已完成 2 題。\n剩下 3 題補上後，才會進到真正頁面。";
+        document.getElementById("question").textContent = `已完成 ${questions.length} 題。\n剩下題目補上後，才會進到真正頁面。`;
         document.getElementById("answers").innerHTML = "";
         document.getElementById("result").textContent = "";
       } else {
@@ -365,7 +372,6 @@ function checkAnswer(isCorrect) {
     }, 850);
 
   } else {
-    const q = questions[current];
     const count = wrongCounts[current];
     const index = Math.min(count, q.wrongTexts.length - 1);
 
