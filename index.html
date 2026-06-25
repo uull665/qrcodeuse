@@ -4,133 +4,214 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Only You</title>
+
 <style>
-  body {
-    margin: 0;
-    min-height: 100vh;
-    background: #050505;
-    color: white;
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 24px;
-  }
+* {
+  box-sizing: border-box;
+}
 
-  .box {
-    width: 100%;
-    max-width: 430px;
-    animation: fadeIn 0.6s ease;
-  }
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, "Noto Sans TC", sans-serif;
+  color: #0b2b55;
+  text-align: center;
+  background:
+    linear-gradient(to bottom, rgba(135,206,250,.85), rgba(255,255,255,.85) 45%, rgba(58,169,226,.9)),
+    url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80");
+  background-size: cover;
+  background-position: center;
+  padding: 28px 18px;
+}
 
-  h1 {
-    font-size: 24px;
-    margin-bottom: 18px;
-  }
+.app {
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
-  .intro {
-    color: #ccc;
-    line-height: 1.8;
-    margin-bottom: 28px;
-  }
+h1 {
+  font-size: 30px;
+  line-height: 1.45;
+  margin: 0 0 14px;
+  font-weight: 800;
+}
 
-  .progress {
-    font-size: 28px;
-    letter-spacing: 6px;
-    margin-bottom: 28px;
-  }
+.sub {
+  font-size: 17px;
+  line-height: 1.8;
+  margin-bottom: 30px;
+  color: #173b66;
+}
 
-  .question {
-    font-size: 22px;
-    line-height: 1.7;
-    margin-bottom: 24px;
-  }
+.wave {
+  font-size: 28px;
+  margin-bottom: 24px;
+}
 
-  button {
-    width: 100%;
-    padding: 14px;
-    margin: 10px 0;
-    border-radius: 12px;
-    border: 1px solid #666;
-    background: #111;
-    color: white;
-    font-size: 17px;
-    cursor: pointer;
-  }
+.card {
+  background: rgba(255,255,255,.92);
+  border-radius: 26px;
+  padding: 30px 22px 26px;
+  box-shadow: 0 18px 45px rgba(0,0,0,.12);
+}
 
-  button:hover {
-    background: #222;
-  }
+.badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #2f76c9, #5aa7e8);
+  color: #fff;
+  padding: 10px 24px;
+  border-radius: 999px;
+  font-size: 18px;
+  font-weight: 700;
+  margin-top: -54px;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 18px rgba(47,118,201,.28);
+}
 
-  .message {
-    margin-top: 20px;
-    font-size: 18px;
-    min-height: 28px;
-  }
+.category {
+  font-size: 25px;
+  font-weight: 800;
+  margin-bottom: 14px;
+}
 
-  .correct {
-    color: #ffb6c1;
-  }
+.question {
+  font-size: 25px;
+  font-weight: 800;
+  line-height: 1.6;
+  margin-bottom: 26px;
+  white-space: pre-line;
+}
 
-  .wrong {
-    color: #ff6b6b;
-  }
+.answer {
+  width: 100%;
+  border: 1.5px solid #a9c9ea;
+  background: rgba(255,255,255,.95);
+  border-radius: 16px;
+  padding: 15px 16px;
+  margin: 13px 0;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  color: #102b4c;
+  font-size: 21px;
+  cursor: pointer;
+}
 
-  .final {
-    display: none;
-    font-size: 24px;
-    line-height: 2;
-    animation: fadeIn 1.2s ease;
-  }
+.answer span {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2f76c9, #5aa7e8);
+  color: white;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 800;
+  flex-shrink: 0;
+}
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+.message {
+  min-height: 28px;
+  margin-top: 18px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.correct {
+  color: #1877c9;
+}
+
+.wrong {
+  color: #d93025;
+}
+
+.hearts {
+  margin: 26px 0 10px;
+  font-size: 22px;
+  letter-spacing: 8px;
+}
+
+.note {
+  font-size: 16px;
+  color: #17416e;
+  margin-top: 12px;
+}
+
+.final {
+  display: none;
+  background: rgba(255,255,255,.92);
+  border-radius: 26px;
+  padding: 36px 24px;
+  box-shadow: 0 18px 45px rgba(0,0,0,.12);
+  font-size: 24px;
+  line-height: 2;
+  font-weight: 700;
+}
+
+@media (max-width: 380px) {
+  h1 { font-size: 26px; }
+  .question { font-size: 22px; }
+  .answer { font-size: 19px; }
+}
 </style>
 </head>
 
 <body>
 
-<div class="box" id="quizBox">
-  <div class="progress" id="progress">♡♡♡♡♡</div>
+<div class="app">
+  <div id="quizBox">
+    <h1>請先答對，<br>才能進到真正的頁面</h1>
 
-  <h1>請先答對，才能進到真正的頁面</h1>
+    <div class="sub">
+      總共有五題。<br>
+      答對一題，才能前往下一題。
+    </div>
 
-  <div class="intro" id="intro">
-    總共有五題。<br>
-    答對一題，才能前往下一題。
+    <div class="wave">〰️</div>
+
+    <div class="card">
+      <div class="badge" id="badge">第 1 題 / 共 5 題</div>
+
+      <div class="category" id="category"></div>
+      <div class="question" id="question"></div>
+
+      <div id="answers"></div>
+      <div class="message" id="message"></div>
+    </div>
+
+    <div class="hearts" id="hearts">♡ ♡ ♡ ♡ ♡</div>
+    <div class="note">🔒 只有答對，才會解鎖下一題喔！</div>
   </div>
 
-  <div class="question" id="question"></div>
-  <div id="answers"></div>
-  <div class="message" id="message"></div>
-</div>
-
-<div class="final" id="finalPage">
-  恭喜你答對了。<br><br>
-  這裡之後可以放真正要給他看的內容。<br>
-  例如照片、告白、留言、影片連結或秘密頁面。
+  <div class="final" id="finalPage">
+    恭喜你答對了。<br><br>
+    這裡之後放真正的頁面內容。
+  </div>
 </div>
 
 <script>
 const questions = [
   {
-    title: "簡易題：第一次見面在婚禮上，老婆吃了幾顆刈包？",
+    category: "簡易題",
+    question: "第一次見面在婚禮上\n老婆吃了幾顆刈包？",
     options: [
-      { text: "A：老婆沒吃", correct: false },
-      { text: "B：整顆吃完", correct: false },
-      { text: "C：吃了半顆", correct: true }
+      { label: "A", text: "老婆沒吃", correct: false },
+      { label: "B", text: "整顆吃完", correct: false },
+      { label: "C", text: "吃了半顆", correct: true }
     ],
     wrongText: "不可能ㄅ知道吧!"
   },
   {
-    title: "金錢觀念：你的錢是誰的錢？",
+    category: "金錢觀念",
+    question: "你的錢是誰的錢？",
     options: [
-      { text: "A：老婆的錢", correct: true },
-      { text: "B：我的就是我的你怎麼樣", correct: false },
-      { text: "C：你最好選A", correct: false }
+      { label: "A", text: "老婆的錢", correct: true },
+      { label: "B", text: "我的就是我的你怎麼樣", correct: false },
+      { label: "C", text: "你最好選A", correct: false }
     ],
     wrongText: "不要了，真的不要了"
   }
@@ -139,30 +220,32 @@ const questions = [
 let current = 0;
 const totalQuestions = 5;
 
-function updateProgress() {
-  let hearts = "";
+function updateHearts() {
+  let result = "";
   for (let i = 0; i < totalQuestions; i++) {
-    hearts += i < current ? "❤" : "♡";
+    result += i < current ? "❤️ " : "♡ ";
   }
-  document.getElementById("progress").textContent = hearts;
+  document.getElementById("hearts").textContent = result.trim();
 }
 
 function showQuestion() {
-  updateProgress();
-
-  document.getElementById("intro").style.display = current === 0 ? "block" : "none";
-  document.getElementById("message").textContent = "";
-  document.getElementById("message").className = "message";
+  updateHearts();
 
   const q = questions[current];
-  document.getElementById("question").textContent = q.title;
+
+  document.getElementById("badge").textContent = `第 ${current + 1} 題 / 共 ${totalQuestions} 題`;
+  document.getElementById("category").textContent = q.category;
+  document.getElementById("question").textContent = q.question;
+  document.getElementById("message").textContent = "";
+  document.getElementById("message").className = "message";
 
   const answers = document.getElementById("answers");
   answers.innerHTML = "";
 
   q.options.forEach(option => {
     const btn = document.createElement("button");
-    btn.textContent = option.text;
+    btn.className = "answer";
+    btn.innerHTML = `<span>${option.label}</span>${option.text}`;
     btn.onclick = () => checkAnswer(option.correct, q.wrongText);
     answers.appendChild(btn);
   });
@@ -172,14 +255,18 @@ function checkAnswer(isCorrect, wrongText) {
   const message = document.getElementById("message");
 
   if (isCorrect) {
+    current++;
+    updateHearts();
+
     message.textContent = "正確! 再下一頁";
     message.className = "message correct";
 
     setTimeout(() => {
-      current++;
-
       if (current >= questions.length) {
-        showComingSoon();
+        document.getElementById("category").textContent = "目前先到這裡";
+        document.getElementById("question").textContent = "已完成 2 題。\n剩下 3 題補上後，才會進到真正頁面。";
+        document.getElementById("answers").innerHTML = "";
+        document.getElementById("message").textContent = "";
       } else {
         showQuestion();
       }
@@ -189,14 +276,6 @@ function checkAnswer(isCorrect, wrongText) {
     message.textContent = wrongText;
     message.className = "message wrong";
   }
-}
-
-function showComingSoon() {
-  updateProgress();
-  document.getElementById("question").innerHTML =
-    "目前已完成 2 題。<br>剩下 3 題補上後，才會開啟真正頁面。";
-  document.getElementById("answers").innerHTML = "";
-  document.getElementById("message").textContent = "";
 }
 
 showQuestion();
