@@ -4,9 +4,6 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Only You</title>
- <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700&family=Kaisei+Decol:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
 * { box-sizing: border-box; }
@@ -14,7 +11,7 @@
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: "Zen Maru Gothic", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", Arial, sans-serif;
   color: #123;
   background:
     linear-gradient(to bottom, rgba(210,235,255,.88), rgba(255,255,255,.9) 45%, rgba(94,176,230,.88)),
@@ -39,59 +36,50 @@ body {
 }
 
 .title {
-  font-family: "Chocolate Classical Sans", serif;
-  font-size: 36px;
-  font-weight: 700;
+  font-size: 32px;
+  line-height: 1.45;
+  font-weight: 850;
   text-align: center;
   color: #0d3768;
-  margin-bottom: 10px;
-}  
-
-.subtitle {
-  font-family: "Zen Maru Gothic", sans-serif;
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-align: center;
-  color: #4a6f96;
-  margin-bottom: 22px;
+  margin-bottom: 26px;
 }
 
 .card {
   background: rgba(255,255,255,.94);
   border-radius: 28px;
-  padding: 28px 22px 24px;
+  padding: 30px 22px 26px;
   box-shadow: 0 18px 45px rgba(27,91,145,.18);
   backdrop-filter: blur(10px);
 }
 
 .badge {
   display: inline-block;
-  font-size: 15px;
+  background: linear-gradient(135deg,#5a8de0,#89b7ff);
+  color: white;
+  font-size: 16px;
   font-weight: 700;
-  color: #fff;
-  background: linear-gradient(135deg,#4f8de8,#8bbcff);
-  padding: 10px 20px;
+  padding: 8px 20px;
   border-radius: 999px;
-  margin-bottom: 24px;
+  margin-bottom: 18px;
 }
 
-.category {
-  font-size: 18px;
-  font-weight: 700;
-  color: #4a6f96;
-  margin-bottom: 10px;
+.hearts {
+  text-align: center;
+  font-size: 20px;
+  letter-spacing: 2px;
+  color: #ff7aa2;
+  margin-bottom: 22px;
+  user-select: none;
 }
 
 .question {
-  font-family: "Kaisei Decol", serif;
-  font-size: 31px;
-  line-height: 1.7;
-  font-weight: 700;
-  letter-spacing: 1px;
-  color: #0d2d52;
+  font-size: 29px;
+  line-height: 1.65;
+  font-weight: 750;
+  color: #173b63;
   white-space: pre-line;
   margin-bottom: 28px;
+  text-align: center;
 }
 
 .answer {
@@ -111,10 +99,10 @@ body {
   transition: .2s ease;
 }
 
-.answer:hover{
-  background:#eef7ff;
-  transform:translateY(-2px);
-  box-shadow:0 8px 18px rgba(34,118,207,.15);
+.answer:hover {
+  background: #eef7ff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(34,118,207,.15);
 }
 
 .answer:active {
@@ -142,26 +130,6 @@ body {
   font-weight: 800;
   color: #1675c1;
   text-align: center;
-}
-
-.footer {
-  margin-top: 22px;
-  text-align: center;
-}
-
-.hearts{
-    text-align:center;
-    font-size:28px;
-    letter-spacing:8px;
-    color:#ff7aa2;
-    margin:8px 0 22px;
-    user-select:none;
-}
-
-.step {
-  font-size: 14px;
-  color: #315b85;
-  font-weight: 700;
 }
 
 .final {
@@ -233,7 +201,9 @@ body {
 }
 
 .unlockHearts {
-  font-size: 24px;
+  font-size: 22px;
+  letter-spacing: 2px;
+  color: #ff7aa2;
   margin-bottom: 18px;
 }
 
@@ -276,25 +246,18 @@ body {
 
   <div class="screen" id="quizScreen">
     <div class="title">🔒 解鎖挑戰</div>
-    <div class="subtitle" id="subtitle">簡易題</div>
 
-<div class="card">
-    <div class="badge" id="badge">第 1 題</div>
-
-    <div class="hearts" id="hearts">♡ ♡ ♡ ♡ ♡</div>
-
-    <div class="question" id="question"></div>
-    <div id="answers"></div>
-    <div class="result" id="result"></div>
-</div>
-
-    <div class="footer">
-      <div class="step" id="step">Question 1 / 5</div>
+    <div class="card">
+      <div class="badge" id="badge"></div>
+      <div class="hearts" id="hearts">♡♡♡♡♡</div>
+      <div class="question" id="question"></div>
+      <div id="answers"></div>
+      <div class="result" id="result"></div>
     </div>
   </div>
 
   <div class="unlock" id="unlockScreen">
-    <div class="unlockHearts">♥ ♥ ♥ ♥ ♥</div>
+    <div class="unlockHearts">♥♥♥♥♥</div>
     <div class="unlockText">正在驗證身份...</div>
     <div class="bar"><div class="barInner" id="barInner"></div></div>
   </div>
@@ -317,6 +280,7 @@ body {
 <script>
 const questions = [
   {
+    category: "簡易題",
     question: "第一次見面在婚禮上\n老婆吃了幾顆刈包？",
     options: [
       { label: "A", text: "老婆沒吃", correct: false },
@@ -346,19 +310,16 @@ let wrongCounts = Array(questions.length).fill(0);
 function updateProgress() {
   let hearts = "";
   for (let i = 0; i < totalQuestions; i++) {
-    hearts += i < current ? "♥ " : "♡ ";
+    hearts += i < current ? "♥" : "♡";
   }
-  document.getElementById("hearts").textContent = hearts.trim();
-  document.getElementById("step").textContent = `Question ${Math.min(current + 1, totalQuestions)} / ${totalQuestions}`;
+  document.getElementById("hearts").textContent = hearts;
 }
 
 function showQuestion() {
   updateProgress();
 
   const q = questions[current];
-
-  document.getElementById("subtitle").textContent = q.category;
-  document.getElementById("badge").textContent = `第 ${current + 1} 題`;
+  document.getElementById("badge").textContent = q.category;
   document.getElementById("question").textContent = q.question;
   document.getElementById("result").textContent = "";
 
@@ -382,7 +343,7 @@ function checkAnswer(isCorrect) {
 
     setTimeout(() => {
       if (current >= questions.length) {
-        document.getElementById("category").textContent = "目前先到這裡";
+        document.getElementById("badge").textContent = "目前先到這裡";
         document.getElementById("question").textContent = "已完成 2 題。\n剩下 3 題補上後，才會進到真正頁面。";
         document.getElementById("answers").innerHTML = "";
         document.getElementById("result").textContent = "";
