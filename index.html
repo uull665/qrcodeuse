@@ -58,7 +58,7 @@ body {
 }
 
 .startGift {
-  font-size: 70px;
+  font-size: 64px;
   margin-bottom: 20px;
   animation: giftFloat 1.8s ease-in-out infinite;
 }
@@ -67,13 +67,39 @@ body {
   line-height: 2;
   color: #5b7191;
   font-size: 18px;
-  margin: 20px 0 0;
+  margin: 20px 0 28px;
   font-weight: 700;
 }
 
+.passwordHint {
+  color: #7c8ea5;
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+#passwordInput {
+  width: 78%;
+  max-width: 240px;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1.5px solid #b7d2ec;
+  font-size: 20px;
+  text-align: center;
+  letter-spacing: 5px;
+  outline: none;
+  transition: .2s;
+}
+
+#passwordInput:focus {
+  border-color: #5a8de0;
+  box-shadow: 0 0 0 4px rgba(90,141,224,.18);
+}
+
 .startButton {
+  width: 78%;
+  max-width: 240px;
   justify-content: center;
-  margin-top: 35px;
+  margin: 22px auto 0;
 }
 
 .badge {
@@ -296,8 +322,21 @@ body {
         即可解鎖你的生日驚喜 🎂
       </p>
 
-      <button class="answer startButton" onclick="startQuiz()">
-        💝 開始解鎖
+      <div class="passwordHint">
+        🔐 輸入只有你知道的密碼
+      </div>
+
+      <input
+        id="passwordInput"
+        type="password"
+        placeholder="••••"
+        onkeydown="if(event.key==='Enter') checkPassword()"
+      >
+
+      <button
+        class="answer startButton"
+        onclick="checkPassword()">
+        🔓 進入
       </button>
     </div>
   </div>
@@ -336,6 +375,8 @@ body {
 </div>
 
 <script>
+const START_PASSWORD = "0712";
+
 const questions = [
   {
     category: "簡易題",
@@ -382,11 +423,11 @@ const questions = [
       { label: "C", text: "大正紅茶拿鐵加珍珠", correct: true }
     ],
     wrongTexts: ["哈哈哈哈再想想"],
-    icons: ["🥲"],
+    icons: ["🥲"]
   },
   {
     category: "最後的最後",
-    question: "近期我們最常在車上聽得歌\n(應該不難啦)",
+    question: "近期我們最常在車上聽的歌\n應該不難啦",
     options: [
       { label: "A", text: "提拉米蘇", correct: false },
       { label: "B", text: "我是不是該安靜的走開", correct: true },
@@ -394,14 +435,29 @@ const questions = [
       { label: "D", text: "解脫", correct: true }
     ],
     wrongTexts: ["確定ㄟ!"],
-    icons: ["🧐"],
+    icons: ["🧐"]
   }
 ];
 
 let current = 0;
-const totalQuestions = 5;
+const totalQuestions = questions.length;
 let wrongCounts = Array(questions.length).fill(0);
 window.afterModalAction = null;
+
+function checkPassword() {
+  const input = document.getElementById("passwordInput").value.trim();
+
+  if (input !== START_PASSWORD) {
+    document.getElementById("modalIcon").textContent = "🔒";
+    document.getElementById("modalText").textContent = "密碼錯誤\n再想想看 🤭";
+    document.getElementById("modalButton").textContent = "再試一次";
+    document.getElementById("modalOverlay").style.display = "flex";
+    document.getElementById("passwordInput").value = "";
+    return;
+  }
+
+  startQuiz();
+}
 
 function startQuiz() {
   const start = document.getElementById("startScreen");
@@ -469,7 +525,7 @@ function checkAnswer(isCorrect) {
     window.afterModalAction = function () {
       document.getElementById("modalIcon").textContent = q.passModalIcon;
       document.getElementById("modalText").textContent = q.passModalText;
-      document.getElementById("modalButton").textContent = "嘿嘿";
+      document.getElementById("modalButton").textContent = "嘻嘻";
       document.getElementById("modalOverlay").style.display = "flex";
 
       window.afterModalAction = function () {
@@ -506,10 +562,7 @@ function goNextQuestion() {
   document.getElementById("modalButton").textContent = "再試一次";
 
   if (current >= questions.length) {
-    document.getElementById("badge").textContent = "目前先到這裡";
-    document.getElementById("question").textContent = `已完成 ${questions.length} 題。\n剩下題目補上後，才會進到真正頁面。`;
-    document.getElementById("answers").innerHTML = "";
-    document.getElementById("result").textContent = "";
+    unlockFinal();
   } else {
     showQuestion();
   }
