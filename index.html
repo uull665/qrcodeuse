@@ -52,9 +52,12 @@ body {
   backdrop-filter: blur(10px);
 }
 
-.startCard {
-  text-align: center;
-  padding: 55px 28px;
+.startCard{
+  text-align:center;
+  padding:55px 28px 28px;
+  min-height:720px;
+  display:flex;
+  flex-direction:column;
 }
 
 .startGift {
@@ -109,7 +112,7 @@ body {
 
 .startEnterButton{
   display:block;
-  margin:20px auto 0;
+  margin:18px auto 0;
   padding:0;
   border:none;
   background:none;
@@ -314,15 +317,12 @@ body {
 }
 
 .startFooterNote{
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:18px;
+  margin-top:auto;
+  padding-top:35px;
   text-align:center;
   color:#b3bcc8;
   font-size:11px;
   line-height:1.5;
-  opacity:.8;
 }
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(12px); }
