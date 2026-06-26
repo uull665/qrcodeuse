@@ -102,6 +102,27 @@ body {
   margin: 22px auto 0;
 }
 
+.startEnterButton{
+  display:block;
+  margin:20px auto 0;
+  padding:0;
+  border:none;
+  background:none;
+  color:#4f86d9;
+  font-size:18px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.startEnterButton:hover{
+  color:#2f69c7;
+}
+
+.startEnterButton:active{
+  transform:scale(.96);
+}
+
 .badge {
   display: inline-block;
   background: linear-gradient(135deg,#5a8de0,#89b7ff);
@@ -333,11 +354,11 @@ body {
         onkeydown="if(event.key==='Enter') checkPassword()"
       >
 
-      <button
-        class="answer startButton"
-        onclick="checkPassword()">
-        🔓 進入
-      </button>
+   <button
+    class="startEnterButton"
+    onclick="checkPassword()">
+    進入
+  </button>
     </div>
   </div>
 
