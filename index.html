@@ -95,6 +95,11 @@ body {
   box-shadow: 0 0 0 4px rgba(90,141,224,.18);
 }
 
+#startScreen{
+  position:relative;
+  min-height:100vh;
+}
+
 .startButton {
   width: 78%;
   max-width: 240px;
@@ -308,6 +313,17 @@ body {
   animation: fadeIn .6s ease;
 }
 
+.startFooterNote{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:18px;
+  text-align:center;
+  color:#b3bcc8;
+  font-size:11px;
+  line-height:1.5;
+  opacity:.8;
+}
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
@@ -345,6 +361,9 @@ body {
 
       <div class="passwordHint">
         🔐 輸入只有你知道的密碼
+      </div>
+      <div class="startNote">
+    ※ 只是回答問題，不可以走心喔 🤍
       </div>
 
       <input
@@ -444,7 +463,7 @@ const questions = [
       { label: "C", text: "大正紅茶拿鐵加珍珠", correct: true }
     ],
     wrongTexts: ["哈哈哈哈再想想"],
-    icons: ["🥲"]
+    icons: 😚"]
   },
   {
     category: "最後的最後",
@@ -453,7 +472,7 @@ const questions = [
       { label: "A", text: "提拉米蘇", correct: false },
       { label: "B", text: "我是不是該安靜的走開", correct: true },
       { label: "C", text: "Booyah", correct: false },
-      { label: "D", text: "解脫", correct: true }
+      { label: "D", text: "解脫", correct: false }
     ],
     wrongTexts: ["確定ㄟ!"],
     icons: ["🧐"]
