@@ -52,12 +52,12 @@ body {
   backdrop-filter: blur(10px);
 }
 
-.startCard{
-  text-align:center;
-  padding:55px 28px 28px;
-  min-height:720px;
-  display:flex;
-  flex-direction:column;
+.startCard {
+  text-align: center;
+  padding: 55px 28px 24px;
+  min-height: 620px;
+  display: flex;
+  flex-direction: column;
 }
 
 .startGift {
@@ -81,12 +81,14 @@ body {
 }
 
 #passwordInput {
-  width: 78%;
-  max-width: 240px;
-  padding: 14px;
+  display: block;
+  width: 62%;
+  max-width: 190px;
+  margin: 0 auto;
+  padding: 12px;
   border-radius: 14px;
   border: 1.5px solid #b7d2ec;
-  font-size: 20px;
+  font-size: 18px;
   text-align: center;
   letter-spacing: 5px;
   outline: none;
@@ -316,13 +318,14 @@ body {
   animation: fadeIn .6s ease;
 }
 
-.startFooterNote{
-  margin-top:auto;
-  padding-top:35px;
-  text-align:center;
-  color:#b3bcc8;
-  font-size:11px;
-  line-height:1.5;
+.startFooterNote {
+  margin-top: auto;
+  padding-top: 30px;
+  text-align: center;
+  color: #b3bcc8;
+  font-size: 11px;
+  line-height: 1.5;
+  opacity: .8;
 }
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(12px); }
@@ -350,8 +353,9 @@ body {
 
 <div class="app">
 
-  <div class="screen" id="startScreen">
-    <div class="card startCard">
+<div class="screen" id="startScreen">
+  <div class="card startCard">
+    <div>
       <div class="startGift">🎁</div>
 
       <p class="startText">
@@ -362,9 +366,6 @@ body {
       <div class="passwordHint">
         🔐 輸入只有你知道的密碼
       </div>
-      <div class="startNote">
-    ※ 只是回答問題，不可以走心喔 🤍
-      </div>
 
       <input
         id="passwordInput"
@@ -373,13 +374,18 @@ body {
         onkeydown="if(event.key==='Enter') checkPassword()"
       >
 
-   <button
-    class="startEnterButton"
-    onclick="checkPassword()">
-    進入
-  </button>
+      <button
+        class="startEnterButton"
+        onclick="checkPassword()">
+        進入
+      </button>
+    </div>
+
+    <div class="startFooterNote">
+      ※ 只是回答問題，不可以走心喔 🤍
     </div>
   </div>
+</div>
 
   <div class="screen" id="quizScreen" style="display:none;">
     <div class="title">🔒 解鎖挑戰</div>
@@ -463,7 +469,7 @@ const questions = [
       { label: "C", text: "大正紅茶拿鐵加珍珠", correct: true }
     ],
     wrongTexts: ["哈哈哈哈再想想"],
-    icons: 😚"]
+    icons: ["😚"]
   },
   {
     category: "最後的最後",
