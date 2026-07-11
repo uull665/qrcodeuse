@@ -434,7 +434,8 @@ body {
   justify-content: center;
 }
 
-.storyImage {
+.storyMedia {
+  display: none;
   width: 100%;
   max-height: 72vh;
   object-fit: contain;
@@ -442,10 +443,10 @@ body {
   box-shadow: 0 18px 45px rgba(0,0,0,.35);
 }
 
-.storyImage.animate {
+.storyMedia.animate {
   animation: storyZoom .8s ease both;
 }
-
+  
 .storyCaption {
   min-height: 48px;
   padding: 15px 8px 0;
@@ -640,9 +641,21 @@ body {
       <button class="storyClose" onclick="showBirthdayFinal()" aria-label="關閉">×</button>
     </div>
 
-    <div class="storyImageWrap">
-      <img class="storyImage" id="storyImage" alt="每月回憶照片">
-    </div>
+<div class="storyImageWrap">
+  <img
+    class="storyMedia"
+    id="storyImage"
+    alt="每月回憶照片"
+  >
+
+  <video
+    class="storyMedia"
+    id="storyVideo"
+    playsinline
+    muted
+    preload="metadata"
+  ></video>
+</div>
 
     <div class="storyCaption" id="storyCaption"></div>
   </div>
@@ -731,23 +744,124 @@ const questions = [
 ];
 
 const stories = [
-  { month: "2025 / 03", image: "images/2025-03.jpg", caption: "" },
-  { month: "2025 / 04", image: "images/2025-04.jpg", caption: "" },
-  { month: "2025 / 05", image: "images/2025-05.jpg", caption: "" },
-  { month: "2025 / 06", image: "images/2025-06.jpg", caption: "" },
-  { month: "2025 / 07", image: "images/2025-07.jpg", caption: "" },
-  { month: "2025 / 08", image: "images/2025-08.jpg", caption: "" },
-  { month: "2025 / 09", image: "images/2025-09.jpg", caption: "" },
-  { month: "2025 / 10", image: "images/2025-10.jpg", caption: "" },
-  { month: "2025 / 11", image: "images/2025-11.jpg", caption: "" },
-  { month: "2025 / 12", image: "images/2025-12.jpg", caption: "" },
-  { month: "2026 / 01", image: "images/2026-01.jpg", caption: "" },
-  { month: "2026 / 02", image: "images/2026-02.jpg", caption: "" },
-  { month: "2026 / 03", image: "images/2026-03.jpg", caption: "" },
-  { month: "2026 / 04", image: "images/2026-04.jpg", caption: "" },
-  { month: "2026 / 05", image: "images/2026-05.jpg", caption: "" },
-  { month: "2026 / 06", image: "images/2026-06.jpg", caption: "" },
-  { month: "2026 / 07", image: "images/2026-07.jpg", caption: "" }
+  {
+    month: "2025 / 03",
+    type: "image",
+    src: "images/2025-03.jpg",
+    duration: 9000,
+    caption: ""
+  },
+  {
+    month: "2025 / 04",
+    type: "video",
+    src: "videos/2025-04.mp4",
+    caption: ""
+  },
+  {
+    month: "2025 / 05",
+    type: "image",
+    src: "images/2025-05.jpg",
+    duration: 9000,
+    caption: ""
+  },
+  {
+    month: "2025 / 06",
+    type: "image",
+    src: "images/2025-05.jpg",
+    duration: 9000,
+    caption: ""
+  },
+  {
+    month: "2025 / 07",
+    type: "image",
+    src: "images/2025-05.jpg",
+    duration: 9000,
+    caption: ""
+  },
+  {
+    month: "2025 / 08",
+    type: "image",
+    src: "images/2025-05.jpg",
+    duration: 9000,
+    caption: ""
+  },
+  {
+    month: "2025 / 09",
+    type: "image",
+    src: "images/2025-05.jpg",
+    duration: 9000,
+    caption: ""
+  },
+  {
+    month: "2025 / 10",
+    type: "image",
+    src: "images/2025-05.jpg",
+    duration: 9000,
+    caption: ""
+  },
+  {
+    month: "2025 / 11",
+    type: "image",
+    src: "images/2025-05.jpg",
+    duration: 9000,
+    caption: ""
+  },
+  {
+    month: "2025 / 12",
+    type: "image",
+    src: "images/2025-05.jpg",
+    duration: 9000,
+    caption: ""
+  },
+  {
+    month: "2026 / 01",
+    type: "image",
+    src: "images/2025-05.jpg",
+    duration: 5000,
+    caption: ""
+  },
+  {
+    month: "2026 / 02",
+    type: "image",
+    src: "images/2025-05.jpg",
+    duration: 5000,
+    caption: ""
+  },
+  {
+    month: "2026 / 03",
+    type: "image",
+    src: "images/2025-05.jpg",
+    duration: 5000,
+    caption: ""
+  },
+  {
+    month: "2026 / 04",
+    type: "image",
+    src: "images/2025-05.jpg",
+    duration: 5000,
+    caption: ""
+  },
+  {
+    month: "2026 / 05",
+    type: "image",
+    src: "images/2025-05.jpg",
+    duration: 5000,
+    caption: ""
+  },
+  {
+    month: "2026 / 06",
+    type: "image",
+    src: "images/2025-05.jpg",
+    duration: 5000,
+    caption: ""
+  },
+  {
+    month: "2026 / 07",
+    type: "image",
+    src: "images/2025-05.jpg",
+    duration: 5000,
+    caption: ""
+  }
 ];
 
 let current = 0;
@@ -755,6 +869,7 @@ let storyIndex = 0;
 const totalQuestions = questions.length;
 let wrongCounts = Array(questions.length).fill(0);
 window.afterModalAction = null;
+let storyTimer = null;
 
 function checkPassword() {
   const input = document.getElementById("passwordInput").value.trim();
@@ -900,37 +1015,7 @@ function openStories() {
   renderStory();
 }
 
-function renderStory() {
-  const story = stories[storyIndex];
-  const image = document.getElementById("storyImage");
-  const caption = document.getElementById("storyCaption");
-
-  document.getElementById("storyMonth").textContent = story.month;
-  document.getElementById("storyBackground").style.backgroundImage = `url("${story.image}")`;
-
-  image.classList.remove("animate");
-  caption.classList.remove("show");
-
-  image.src = story.image;
-  caption.textContent = story.caption;
-  caption.style.display = story.caption ? "block" : "none";
-
-  image.onerror = () => {
-    image.onerror = null;
-    image.src = "https://placehold.co/900x1200/eaf2fb/456789?text=" + encodeURIComponent(story.month);
-    document.getElementById("storyBackground").style.backgroundImage = `url("${image.src}")`;
-  };
-
-  void image.offsetWidth;
-  image.classList.add("animate");
-
-  if (story.caption) {
-    void caption.offsetWidth;
-    caption.classList.add("show");
-  }
-
-  updateStoryProgress();
-}
+renderStory()
 
 function updateStoryProgress() {
   const progress = document.getElementById("storyProgress");
@@ -947,7 +1032,10 @@ function updateStoryProgress() {
   });
 }
 
+
 function nextStory() {
+  clearStoryTimer();
+  
   if (storyIndex >= stories.length - 1) {
     showBirthdayFinal();
     return;
@@ -958,6 +1046,7 @@ function nextStory() {
 }
 
 function prevStory() {
+  clearStoryTimer();
   if (storyIndex <= 0) return;
 
   storyIndex--;
@@ -973,6 +1062,22 @@ function replayStories() {
   document.getElementById("birthdayPage").style.display = "none";
   openStories();
 }
+
+function clearStoryTimer() {
+  if (storyTimer) {
+    clearTimeout(storyTimer);
+    storyTimer = null;
+  }
+
+  const video = document.getElementById("storyVideo");
+
+  if (video) {
+    video.pause();
+    video.onended = null;
+  }
+}
+
+
 
 showQuestion();
 </script>
