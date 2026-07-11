@@ -747,118 +747,118 @@ const stories = [
   {
     month: "2025 / 03",
     type: "image",
-    src: "images/2025-03.png",
+    src: "2025-03.png",
     duration: 9000,
     caption: ""
   },
   {
     month: "2025 / 04",
-    type: "video",
-    src: "videos/2025-04.mp4",
+    type: "image",
+    src: "2025-04.png",
     caption: ""
   },
   {
     month: "2025 / 05",
     type: "image",
-    src: "images/2025-05.jpg",
+    src: "2025-05.png",
     duration: 9000,
     caption: ""
   },
   {
     month: "2025 / 06",
     type: "image",
-    src: "images/2025-05.jpg",
+    src: "2025-05.png",
     duration: 9000,
     caption: ""
   },
   {
     month: "2025 / 07",
     type: "image",
-    src: "images/2025-05.jpg",
+    src: "2025-05.png",
     duration: 9000,
     caption: ""
   },
   {
     month: "2025 / 08",
     type: "image",
-    src: "images/2025-05.jpg",
+    src: "2025-05.png",
     duration: 9000,
     caption: ""
   },
   {
     month: "2025 / 09",
     type: "image",
-    src: "images/2025-05.jpg",
+    src: "2025-05.png",
     duration: 9000,
     caption: ""
   },
   {
     month: "2025 / 10",
     type: "image",
-    src: "images/2025-05.jpg",
+    src: "2025-05.png",
     duration: 9000,
     caption: ""
   },
   {
     month: "2025 / 11",
     type: "image",
-    src: "images/2025-05.jpg",
+    src: "2025-05.png",
     duration: 9000,
     caption: ""
   },
   {
     month: "2025 / 12",
     type: "image",
-    src: "images/2025-05.jpg",
+    src: "2025-05.png",
     duration: 9000,
     caption: ""
   },
   {
     month: "2026 / 01",
     type: "image",
-    src: "images/2025-05.jpg",
+    src: "2025-05.png",
     duration: 5000,
     caption: ""
   },
   {
     month: "2026 / 02",
     type: "image",
-    src: "images/2025-05.jpg",
+    src: "2025-05.png",
     duration: 5000,
     caption: ""
   },
   {
     month: "2026 / 03",
     type: "image",
-    src: "images/2025-05.jpg",
+    src: "2025-05.png",
     duration: 5000,
     caption: ""
   },
   {
     month: "2026 / 04",
     type: "image",
-    src: "images/2025-05.jpg",
+    src: "2025-05.png",
     duration: 5000,
     caption: ""
   },
   {
     month: "2026 / 05",
     type: "image",
-    src: "images/2025-05.jpg",
+    src: "2025-05.png",
     duration: 5000,
     caption: ""
   },
   {
     month: "2026 / 06",
     type: "image",
-    src: "images/2025-05.jpg",
+    src: "2025-05.png",
     duration: 5000,
     caption: ""
   },
   {
     month: "2026 / 07",
     type: "image",
-    src: "images/2025-05.jpg",
+    src: "2025-05.png",
     duration: 5000,
     caption: ""
   }
@@ -1015,7 +1015,81 @@ function openStories() {
   renderStory();
 }
 
-renderStory()
+
+function renderStory() {
+  clearStoryTimer();
+
+  const story = stories[storyIndex];
+  const image = document.getElementById("storyImage");
+  const video = document.getElementById("storyVideo");
+  const caption = document.getElementById("storyCaption");
+  const background = document.getElementById("storyBackground");
+
+  document.getElementById("storyMonth").textContent = story.month;
+
+  image.style.display = "none";
+  video.style.display = "none";
+  image.classList.remove("animate");
+  video.classList.remove("animate");
+  caption.classList.remove("show");
+
+  caption.textContent = story.caption || "";
+  caption.style.display = story.caption ? "block" : "none";
+
+  if (story.type === "video") {
+    video.style.display = "block";
+    video.src = story.src;
+    video.currentTime = 0;
+    background.style.backgroundImage = "none";
+    background.style.backgroundColor = "#111";
+
+    video.onloadeddata = () => {
+      void video.offsetWidth;
+      video.classList.add("animate");
+      video.play().catch(() => {});
+    };
+
+    video.onerror = () => {
+      video.style.display = "none";
+      image.style.display = "block";
+      image.src = "https://placehold.co/900x1200/eaf2fb/456789?text=" +
+        encodeURIComponent(story.month);
+      background.style.backgroundImage = `url("${image.src}")`;
+      void image.offsetWidth;
+      image.classList.add("animate");
+
+      storyTimer = setTimeout(nextStory, 5000);
+    };
+
+    video.onended = nextStory;
+  } else {
+    image.style.display = "block";
+    image.src = story.src;
+    background.style.backgroundColor = "#111";
+    background.style.backgroundImage = `url("${story.src}")`;
+
+    image.onload = () => {
+      void image.offsetWidth;
+      image.classList.add("animate");
+    };
+
+    image.onerror = () => {
+      image.onerror = null;
+      image.src = "https://placehold.co/900x1200/eaf2fb/456789?text=" +
+        encodeURIComponent(story.month);
+      background.style.backgroundImage = `url("${image.src}")`;
+    };
+
+    storyTimer = setTimeout(nextStory, story.duration || 5000);
+  }
+
+  if (story.caption) {
+    void caption.offsetWidth;
+    caption.classList.add("show");
+  }
+
+  updateStoryProgress();
+}
 
 function updateStoryProgress() {
   const progress = document.getElementById("storyProgress");
