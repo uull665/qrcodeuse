@@ -475,14 +475,7 @@ body {
 .storyTapZone.right { right: 0; }
 
 .storyHint {
-  position: absolute;
-  left: 50%;
-  bottom: max(8px, env(safe-area-inset-bottom));
-  transform: translateX(-50%);
-  font-size: 11px;
-  color: rgba(255,255,255,.65);
-  z-index: 3;
-  pointer-events: none;
+    display: none;
 }
 
 .birthdayPage {
@@ -662,7 +655,7 @@ body {
 
   <div class="storyTapZone left" onclick="prevStory()"></div>
   <div class="storyTapZone right" onclick="nextStory()"></div>
-  <div class="storyHint">左邊上一張・右邊下一張</div>
+  <div class="storyHint"></div>
 </div>
 
 <div class="birthdayPage" id="birthdayPage">
