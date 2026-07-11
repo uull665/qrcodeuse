@@ -346,6 +346,217 @@ body {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-8px); }
 }
+
+
+/* ===== 回憶 Story ===== */
+.storyPage {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: #111;
+  color: #fff;
+  overflow: hidden;
+  touch-action: manipulation;
+}
+
+.storyBackground {
+  position: absolute;
+  inset: -24px;
+  background-size: cover;
+  background-position: center;
+  filter: blur(24px) brightness(.42);
+  transform: scale(1.12);
+  transition: background-image .45s ease;
+}
+
+.storyShade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.34), transparent 22%),
+    linear-gradient(to top, rgba(0,0,0,.48), transparent 28%);
+}
+
+.storyContent {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 430px);
+  height: 100%;
+  margin: 0 auto;
+  padding: max(18px, env(safe-area-inset-top)) 14px max(18px, env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+}
+
+.storyProgress {
+  display: grid;
+  grid-template-columns: repeat(17, 1fr);
+  gap: 3px;
+  margin-bottom: 14px;
+}
+
+.storyProgressItem {
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.3);
+}
+
+.storyProgressItem.done,
+.storyProgressItem.active {
+  background: rgba(255,255,255,.96);
+}
+
+.storyHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: 750;
+  text-shadow: 0 2px 8px rgba(0,0,0,.35);
+}
+
+.storyClose {
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.storyImageWrap {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.storyImage {
+  width: 100%;
+  max-height: 72vh;
+  object-fit: contain;
+  border-radius: 20px;
+  box-shadow: 0 18px 45px rgba(0,0,0,.35);
+}
+
+.storyImage.animate {
+  animation: storyZoom .8s ease both;
+}
+
+.storyCaption {
+  min-height: 48px;
+  padding: 15px 8px 0;
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.6;
+  font-weight: 650;
+  text-shadow: 0 2px 8px rgba(0,0,0,.4);
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.storyCaption.show {
+  animation: captionIn .5s .32s ease forwards;
+}
+
+.storyTapZone {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  z-index: 4;
+}
+
+.storyTapZone.left { left: 0; }
+.storyTapZone.right { right: 0; }
+
+.storyHint {
+  position: absolute;
+  left: 50%;
+  bottom: max(8px, env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  font-size: 11px;
+  color: rgba(255,255,255,.65);
+  z-index: 3;
+  pointer-events: none;
+}
+
+.birthdayPage {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background:
+    linear-gradient(to bottom, rgba(224,240,255,.95), rgba(255,255,255,.98) 50%, rgba(116,190,235,.9));
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+}
+
+.birthdayCard {
+  width: min(100%, 390px);
+  background: rgba(255,255,255,.94);
+  border-radius: 28px;
+  padding: 44px 24px;
+  box-shadow: 0 18px 45px rgba(27,91,145,.18);
+  animation: pop .45s ease;
+}
+
+.birthdayEmoji {
+  font-size: 58px;
+  margin-bottom: 18px;
+}
+
+.birthdayTitle {
+  font-size: 30px;
+  color: #d86f8c;
+  font-weight: 850;
+  margin-bottom: 18px;
+}
+
+.birthdayText {
+  color: #4a5f78;
+  font-size: 17px;
+  line-height: 1.9;
+  font-weight: 650;
+}
+
+.replayButton {
+  display: block;
+  margin: 24px auto 0;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #4f86d9;
+  font-size: 16px;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+@keyframes storyZoom {
+  from {
+    opacity: 0;
+    transform: scale(.92);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.03);
+    filter: blur(0);
+  }
+}
+
+@keyframes captionIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 </style>
 </head>
 
@@ -405,10 +616,6 @@ body {
     <div class="bar"><div class="barInner" id="barInner"></div></div>
   </div>
 
-  <div class="final" id="finalPage">
-    Access Granted<br><br>
-    這裡之後放真正的頁面內容。
-  </div>
 
 </div>
 
@@ -417,6 +624,43 @@ body {
     <div class="modalIcon" id="modalIcon">😶</div>
     <div class="modalText" id="modalText"></div>
     <button id="modalButton" onclick="closeModal()">再試一次</button>
+  </div>
+</div>
+
+
+<div class="storyPage" id="storyPage">
+  <div class="storyBackground" id="storyBackground"></div>
+  <div class="storyShade"></div>
+
+  <div class="storyContent">
+    <div class="storyProgress" id="storyProgress"></div>
+
+    <div class="storyHeader">
+      <span id="storyMonth">2025 / 03</span>
+      <button class="storyClose" onclick="showBirthdayFinal()" aria-label="關閉">×</button>
+    </div>
+
+    <div class="storyImageWrap">
+      <img class="storyImage" id="storyImage" alt="每月回憶照片">
+    </div>
+
+    <div class="storyCaption" id="storyCaption"></div>
+  </div>
+
+  <div class="storyTapZone left" onclick="prevStory()"></div>
+  <div class="storyTapZone right" onclick="nextStory()"></div>
+  <div class="storyHint">左邊上一張・右邊下一張</div>
+</div>
+
+<div class="birthdayPage" id="birthdayPage">
+  <div class="birthdayCard">
+    <div class="birthdayEmoji">🎂</div>
+    <div class="birthdayTitle">Happy Birthday</div>
+    <div class="birthdayText">
+      謝謝你陪我走過這些月份。<br>
+      之後也繼續一起製造更多回憶吧 🤍
+    </div>
+    <button class="replayButton" onclick="replayStories()">重新看一次</button>
   </div>
 </div>
 
@@ -483,9 +727,31 @@ const questions = [
     wrongTexts: ["確定ㄟ!"],
     icons: ["🧐"]
   }
+
+];
+
+const stories = [
+  { month: "2025 / 03", image: "images/2025-03.jpg", caption: "" },
+  { month: "2025 / 04", image: "images/2025-04.jpg", caption: "" },
+  { month: "2025 / 05", image: "images/2025-05.jpg", caption: "" },
+  { month: "2025 / 06", image: "images/2025-06.jpg", caption: "" },
+  { month: "2025 / 07", image: "images/2025-07.jpg", caption: "" },
+  { month: "2025 / 08", image: "images/2025-08.jpg", caption: "" },
+  { month: "2025 / 09", image: "images/2025-09.jpg", caption: "" },
+  { month: "2025 / 10", image: "images/2025-10.jpg", caption: "" },
+  { month: "2025 / 11", image: "images/2025-11.jpg", caption: "" },
+  { month: "2025 / 12", image: "images/2025-12.jpg", caption: "" },
+  { month: "2026 / 01", image: "images/2026-01.jpg", caption: "" },
+  { month: "2026 / 02", image: "images/2026-02.jpg", caption: "" },
+  { month: "2026 / 03", image: "images/2026-03.jpg", caption: "" },
+  { month: "2026 / 04", image: "images/2026-04.jpg", caption: "" },
+  { month: "2026 / 05", image: "images/2026-05.jpg", caption: "" },
+  { month: "2026 / 06", image: "images/2026-06.jpg", caption: "" },
+  { month: "2026 / 07", image: "images/2026-07.jpg", caption: "" }
 ];
 
 let current = 0;
+let storyIndex = 0;
 const totalQuestions = questions.length;
 let wrongCounts = Array(questions.length).fill(0);
 window.afterModalAction = null;
@@ -624,8 +890,88 @@ function unlockFinal() {
 
   setTimeout(() => {
     document.getElementById("unlockScreen").style.display = "none";
-    document.getElementById("finalPage").style.display = "block";
+    openStories();
   }, 1800);
+}
+
+function openStories() {
+  storyIndex = 0;
+  document.getElementById("storyPage").style.display = "block";
+  renderStory();
+}
+
+function renderStory() {
+  const story = stories[storyIndex];
+  const image = document.getElementById("storyImage");
+  const caption = document.getElementById("storyCaption");
+
+  document.getElementById("storyMonth").textContent = story.month;
+  document.getElementById("storyBackground").style.backgroundImage = `url("${story.image}")`;
+
+  image.classList.remove("animate");
+  caption.classList.remove("show");
+
+  image.src = story.image;
+  caption.textContent = story.caption;
+  caption.style.display = story.caption ? "block" : "none";
+
+  image.onerror = () => {
+    image.onerror = null;
+    image.src = "https://placehold.co/900x1200/eaf2fb/456789?text=" + encodeURIComponent(story.month);
+    document.getElementById("storyBackground").style.backgroundImage = `url("${image.src}")`;
+  };
+
+  void image.offsetWidth;
+  image.classList.add("animate");
+
+  if (story.caption) {
+    void caption.offsetWidth;
+    caption.classList.add("show");
+  }
+
+  updateStoryProgress();
+}
+
+function updateStoryProgress() {
+  const progress = document.getElementById("storyProgress");
+  progress.innerHTML = "";
+
+  stories.forEach((_, index) => {
+    const item = document.createElement("div");
+    item.className = "storyProgressItem";
+
+    if (index < storyIndex) item.classList.add("done");
+    if (index === storyIndex) item.classList.add("active");
+
+    progress.appendChild(item);
+  });
+}
+
+function nextStory() {
+  if (storyIndex >= stories.length - 1) {
+    showBirthdayFinal();
+    return;
+  }
+
+  storyIndex++;
+  renderStory();
+}
+
+function prevStory() {
+  if (storyIndex <= 0) return;
+
+  storyIndex--;
+  renderStory();
+}
+
+function showBirthdayFinal() {
+  document.getElementById("storyPage").style.display = "none";
+  document.getElementById("birthdayPage").style.display = "flex";
+}
+
+function replayStories() {
+  document.getElementById("birthdayPage").style.display = "none";
+  openStories();
 }
 
 showQuestion();
